@@ -4,8 +4,8 @@ include: "common.smk"
 
 rule all:
     input:
-        outfile = expand('{sample}/vcf', sample=pep.sample_table.index)
-        #samples = expand('{sample}.txt', sample=pep.sample_table["sample_name"])
+        outfile = expand('{sample}/vcf', sample=pep.sample_table.index),
+        libraries = expand("merge_{sample}.txt", sample=pep.sample_table.index)
 
 checkpoint split_vcf:
     """ Split the variants over multiple files """
@@ -49,4 +49,37 @@ checkpoint split_vcf:
         rm variants.txt
         rm x*
         rm {wildcards.sample}.vcf
+    """
+
+rule create_tssv_config:
+    """ Create configuration files for tssv """
+    input:
+        vcf = "{sample}/vcf/{sample}_{chunk}.vcf",
+        ref = "tests/data/reference/ref.fa",
+        scr = "scripts/create-library.py"
+    params:
+        flank_size = 20,
+        max_indel_size = 20
+    output:
+        "{sample}/library/{chunk}.lib"
+    log:
+        "log/{sample}_library_{chunk}.txt"
+    container:
+        containers["tssv-library"]
+    shell: """
+        {input.scr} \
+            --reference {input.ref} \
+            --vcf {input.vcf} \
+            --flank-size {params.flank_size} \
+            --max-size {params.max_indel_size} > {output}
+    """
+
+rule temp_merge_tssv:
+    input: gather_libraries
+    output: "merge_{sample}.txt"
+    log: "log/merge_{sample}.txt"
+    container:
+        containers["debian"]
+    shell: """
+        cat {input} > {output}
     """

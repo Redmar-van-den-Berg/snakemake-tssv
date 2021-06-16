@@ -21,6 +21,9 @@
     - path: sample1/vcf/sample1.vcf
       should_exist: false
 
+    - path: sample1/library/000.lib
+    - path: sample1/library/005.lib
+
 - name: integration-two-samples
   tags:
     - integration
@@ -53,3 +56,6 @@
       should_exist: false
     - path: sample2/vcf/sample2.vcf
       should_exist: false
+
+    - path: sample1/library/000.lib
+    - path: sample2/library/000.lib

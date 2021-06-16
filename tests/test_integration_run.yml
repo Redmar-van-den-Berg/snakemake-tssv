@@ -8,15 +8,15 @@
       --jobs 1
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
-      --config pepfile=tests/pep/project_config.yaml
+      --config pepfile=tests/pep/project_config_single.yml
       --snakefile Snakefile
   stderr:
     must_not_contain:
       - rror
   files:
-    - path: outputfile.txt
-      contains:
-        - Hello world!
-    - path: sample1.txt
-    - path: sample2.txt
-    - path: sample3.txt
+    - path: sample1/vcf/sample1_000.vcf
+    - path: sample1/vcf/sample1_005.vcf
+    - path: sample1/vcf/x000
+      should_exist: false
+    - path: sample1/vcf/sample1.vcf
+      should_exist: false

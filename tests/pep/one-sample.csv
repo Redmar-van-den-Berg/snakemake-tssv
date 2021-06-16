@@ -1,0 +1,2 @@
+sample_name,vcf,forward,reverse
+sample1,tests/data/micro.vcf.gz,tests/data/fastq/micro_rg1_R1.fq.gz,tests/data/fastq/micro_rg1_R2.fq.gz

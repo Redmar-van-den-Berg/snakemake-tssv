@@ -6,15 +6,12 @@
       --dryrun
       --reason
       --printshellcmds
-      --config pepfile=tests/pep/project_config.yaml
+      --config pepfile=tests/pep/project_config_single.yml
       --snakefile Snakefile
   exit_code: 0
   stdout:
     contains:
-      - echo "Hello world!" > outputfile.txt
-      - sample1.txt
-      - sample2.txt
-      - sample3.txt
+      - variants.txt
     must_not_contain:
       - rror
   stderr:

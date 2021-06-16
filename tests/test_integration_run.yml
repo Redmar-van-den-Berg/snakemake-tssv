@@ -1,4 +1,4 @@
-- name: test-one-sample
+- name: integration-one-sample
   tags:
     - integration
   command: >
@@ -21,7 +21,7 @@
     - path: sample1/vcf/sample1.vcf
       should_exist: false
 
-- name: test-two-samples
+- name: integration-two-samples
   tags:
     - integration
   command: >

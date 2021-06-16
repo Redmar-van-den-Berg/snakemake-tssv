@@ -2,7 +2,6 @@
 include: "common.smk"
 pepfile: config["pepfile"]
 
-
 rule all:
     input:
         outfile = expand('{sample}/vcf', sample=pep.sample_table.index)
@@ -13,7 +12,7 @@ checkpoint split_vcf:
     input:
         vcf = lambda wc: pep.sample_table.loc[wc.sample, 'vcf']
     params:
-        variants_per_file = 3
+        variants_per_file = pep.config.variants_per_file
     output:
         directory('{sample}/vcf/')
     log:

@@ -38,13 +38,17 @@
       - rror
   files:
     - path: sample1/vcf/sample1_000.vcf
+    - path: sample1/vcf/sample1_001.vcf
     - path: sample1/vcf/sample1_005.vcf
+      should_exist: false
     - path: sample1/vcf/x000
       should_exist: false
     - path: sample1/vcf/sample1.vcf
       should_exist: false
     - path: sample2/vcf/sample2_000.vcf
+    - path: sample2/vcf/sample2_001.vcf
     - path: sample2/vcf/sample2_005.vcf
+      should_exist: false
     - path: sample2/vcf/x000
       should_exist: false
     - path: sample2/vcf/sample2.vcf

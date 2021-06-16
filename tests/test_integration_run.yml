@@ -1,18 +1,15 @@
 - name: integration-one-sample
   tags:
     - integration
-  command: >-
-    bash -c "
-    find * -type f &&
-    snakemake \
-      --reason \
-      --printshellcmds \
-      --jobs 1 \
-      --latency-wait 120 \
-      --use-singularity --singularity-args ' --cleanenv --bind /tmp' \
-      --config pepfile=tests/pep/project_config_single.yml \
+  command: >
+    snakemake
+      --reason
+      --printshellcmds
+      --jobs 1
+      --latency-wait 120
+      --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --config pepfile=tests/pep/project_config_single.yml
       --snakefile Snakefile
-    "
   stderr:
     must_not_contain:
       - rror
@@ -27,18 +24,15 @@
 - name: integration-two-samples
   tags:
     - integration
-  command: >-
-    bash -c "
-    find * -type f &&
-    snakemake \
-      --reason \
-      --printshellcmds \
-      --jobs 1 \
-      --latency-wait 120 \
-      --use-singularity --singularity-args ' --cleanenv --bind /tmp' \
-      --config pepfile=tests/pep/project_config_two.yml \
+  command: >
+    snakemake
+      --reason
+      --printshellcmds
+      --jobs 1
+      --latency-wait 120
+      --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --config pepfile=tests/pep/project_config_two.yml
       --snakefile Snakefile
-      "
   stderr:
     must_not_contain:
       - rror

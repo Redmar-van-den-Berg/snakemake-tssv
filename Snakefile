@@ -22,8 +22,6 @@ checkpoint split_vcf:
     shell: """
         set -e
 
-        pwd
-        find * -type f
         mkdir -p {output}
 
         zcat {input.vcf} > {output}/{wildcards.sample}.vcf

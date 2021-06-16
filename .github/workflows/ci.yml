@@ -17,8 +17,9 @@ jobs:
           - sanity-snakemake
           - sanity-snakemake-lint
           - sanity-singularity
-          - dry-run-vanilla
-          - integration-vanilla
+          - dry-run-minimal
+          - integration-one-sample
+          - integration-two-samples
     steps:
     - uses: actions/checkout@v2
 

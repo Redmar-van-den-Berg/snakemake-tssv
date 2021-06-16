@@ -3,7 +3,7 @@
     - integration
   command: >-
     bash -c "
-    du -sh tests/data/micro.vcf.gz &&
+    find * -type f &&
     snakemake \
       --reason \
       --printshellcmds \
@@ -29,7 +29,7 @@
     - integration
   command: >-
     bash -c "
-    du -sh tests/data/micro.vcf.gz &&
+    find * -type f &&
     snakemake \
       --reason \
       --printshellcmds \

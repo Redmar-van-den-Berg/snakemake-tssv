@@ -55,3 +55,7 @@ jobs:
           echo $file; cat $file
         done
         '
+    - name: List files in run folder in case of failure
+      if: ${{ failure() }}
+      run: >-
+        find .

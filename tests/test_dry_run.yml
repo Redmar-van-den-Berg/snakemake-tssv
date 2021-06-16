@@ -1,4 +1,4 @@
-- name: dry-run-vanilla
+- name: dry-run-minimal
   tags:
     - dry-run
   command: >
@@ -6,12 +6,14 @@
       --dryrun
       --reason
       --printshellcmds
-      --config pepfile=tests/pep/project_config_single.yml
+      --config pepfile=tests/pep/project_config_minimal.yml
       --snakefile Snakefile
   exit_code: 0
   stdout:
     contains:
       - variants.txt
+    contains_regex:
+      - "split.*--lines 50"
     must_not_contain:
       - rror
   stderr:

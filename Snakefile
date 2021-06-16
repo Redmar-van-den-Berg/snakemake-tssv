@@ -1,6 +1,6 @@
 
-include: "common.smk"
 pepfile: config["pepfile"]
+include: "common.smk"
 
 rule all:
     input:

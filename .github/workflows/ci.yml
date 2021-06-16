@@ -58,4 +58,4 @@ jobs:
     - name: List files in run folder in case of failure
       if: ${{ failure() }}
       run: >-
-        find .
+        find * -type f

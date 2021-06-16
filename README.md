@@ -1,2 +1,2 @@
-# snakemake-project
-Example of a snakemake project
+# snakemake-tssv
+Snakemake pipeline to run TSSV against on or more VCF files.

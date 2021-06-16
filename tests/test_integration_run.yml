@@ -1,4 +1,4 @@
-- name: integration-vanilla
+- name: test-one-sample
   tags:
     - integration
   command: >
@@ -19,4 +19,33 @@
     - path: sample1/vcf/x000
       should_exist: false
     - path: sample1/vcf/sample1.vcf
+      should_exist: false
+
+- name: test-two-samples
+  tags:
+    - integration
+  command: >
+    snakemake
+      --reason
+      --printshellcmds
+      --jobs 1
+      --latency-wait 120
+      --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --config pepfile=tests/pep/project_config_two.yml
+      --snakefile Snakefile
+  stderr:
+    must_not_contain:
+      - rror
+  files:
+    - path: sample1/vcf/sample1_000.vcf
+    - path: sample1/vcf/sample1_005.vcf
+    - path: sample1/vcf/x000
+      should_exist: false
+    - path: sample1/vcf/sample1.vcf
+      should_exist: false
+    - path: sample2/vcf/sample2_000.vcf
+    - path: sample2/vcf/sample2_005.vcf
+    - path: sample2/vcf/x000
+      should_exist: false
+    - path: sample2/vcf/sample2.vcf
       should_exist: false

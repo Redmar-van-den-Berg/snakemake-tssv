@@ -1,12 +1,12 @@
 
-pepfile: config["pepfile"]
-include: "common.smk"
+pepfile: config['pepfile']
+include: 'common.smk'
 
 rule all:
     input:
         outfile = expand('{sample}/vcf', sample=pep.sample_table.index),
-        reports = expand("{sample}/tssv/reports.txt", sample=pep.sample_table.index),
-        libraries = expand("merge_{sample}.txt", sample=pep.sample_table.index)
+        reports = expand('{sample}/tssv/reports.txt', sample=pep.sample_table.index),
+        libraries = expand('merge_{sample}.txt', sample=pep.sample_table.index)
 
 checkpoint split_vcf:
     """ Split the variants over multiple files """
@@ -17,9 +17,9 @@ checkpoint split_vcf:
     output:
         directory('{sample}/vcf/')
     log:
-        "log/{sample}_split_vcf.txt"
+        'log/{sample}_split_vcf.txt'
     container:
-        containers["debian"]
+        containers['debian']
     shell: """
         set -e
 
@@ -30,8 +30,8 @@ checkpoint split_vcf:
         cd {output}
 
         # Split the header from the variants
-        grep "^#" {wildcards.sample}.vcf > header.txt
-        grep -v "^#" {wildcards.sample}.vcf > variants.txt
+        grep '^#' {wildcards.sample}.vcf > header.txt
+        grep -v '^#' {wildcards.sample}.vcf > variants.txt
 
         # Split the variants into separate files
         split \
@@ -55,18 +55,18 @@ checkpoint split_vcf:
 rule create_tssv_config:
     """ Create configuration files for tssv """
     input:
-        vcf = "{sample}/vcf/{sample}_{chunk}.vcf",
-        ref = "tests/data/reference/ref.fa",
-        scr = "scripts/create-library.py"
+        vcf = '{sample}/vcf/{sample}_{chunk}.vcf',
+        ref = 'tests/data/reference/ref.fa',
+        scr = 'scripts/create-library.py'
     params:
         flank_size = 20,
         max_indel_size = 20
     output:
-        "{sample}/library/{chunk}.lib"
+        '{sample}/library/{chunk}.lib'
     log:
-        "log/{sample}_library_{chunk}.txt"
+        'log/{sample}_library_{chunk}.txt'
     container:
-        containers["tssv-library"]
+        containers['tssv-library']
     shell: """
         {input.scr} \
             --reference {input.ref} \
@@ -77,23 +77,23 @@ rule create_tssv_config:
 
 rule temp_merge_tssv:
     input: gather_libraries
-    output: "merge_{sample}.txt"
-    log: "log/merge_{sample}.txt"
+    output: 'merge_{sample}.txt'
+    log: 'log/merge_{sample}.txt'
     container:
-        containers["debian"]
+        containers['debian']
     shell: """
         cat {input} > {output}
     """
 
 rule run_tssv:
     input:
-        library = "{sample}/library/{chunk}.lib",
+        library = '{sample}/library/{chunk}.lib',
         fastq = lambda wc: pep.sample_table.loc[wc.sample, wc.fastq],
     output:
-        folder = directory("{sample}/tssv/{chunk}-{fastq}/"),
-        report = "{sample}/tssv/{chunk}-{fastq}.txt"
+        folder = directory('{sample}/tssv/{chunk}-{fastq}/'),
+        report = '{sample}/tssv/{chunk}-{fastq}.txt'
     log:
-        "log/tssv_{sample}_{chunk}_{fastq}.txt"
+        'log/tssv_{sample}_{chunk}_{fastq}.txt'
     container:
         containers['tssv']
     shell: """
@@ -118,11 +118,11 @@ rule list_report_files:
     input:
         gather_tssv_reports
     output:
-        "{sample}/tssv/reports.txt"
+        '{sample}/tssv/reports.txt'
     log:
-        "log/list_report_files_{sample}.txt"
+        'log/list_report_files_{sample}.txt'
     container:
-        containers["debian"]
+        containers['debian']
     shell: """
         ls {input} > {output} 2>{log}
     """

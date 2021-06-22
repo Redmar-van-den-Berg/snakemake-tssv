@@ -1,7 +1,7 @@
 containers = {
-        "debian": "docker://debian:latest",
-        "tssv": "docker://quay.io/biocontainers/tssv:1.1.0--py39h7cff6ad_0",
-        "tssv-library": "docker://quay.io/biocontainers/mulled-v2-ddb8b80b33a09f54efd9219c18e1d38acfa18bc8:ae02896ffb35dfc564385b2276a1fbf7862567c2-0"
+        'debian': 'docker://debian:latest',
+        'tssv': 'docker://quay.io/biocontainers/tssv:1.1.0--py39h7cff6ad_0',
+        'tssv-library': 'docker://quay.io/biocontainers/mulled-v2-ddb8b80b33a09f54efd9219c18e1d38acfa18bc8:ae02896ffb35dfc564385b2276a1fbf7862567c2-0'
 }
 
 def gather_libraries(wildcards):
@@ -14,8 +14,8 @@ def gather_libraries(wildcards):
     file.
     """
     checkpoint_output = checkpoints.split_vcf.get(**wildcards).output[0]
-    return expand("{{sample}}/library/{chunk}.lib",
-            chunk=glob_wildcards(os.path.join(checkpoint_output, "{sample}_{chunk}.vcf")).chunk)
+    return expand('{{sample}}/library/{chunk}.lib',
+            chunk=glob_wildcards(os.path.join(checkpoint_output, '{sample}_{chunk}.vcf')).chunk)
 
 def gather_tssv_reports(wildcards):
     """
@@ -29,7 +29,7 @@ def gather_tssv_reports(wildcards):
     checkpoint_output = checkpoints.split_vcf.get(**wildcards).output[0]
 
     # Glob the sample and chunks from the split vcf file
-    globs = glob_wildcards(os.path.join(checkpoint_output, "{sample}_{chunk}.vcf"))
+    globs = glob_wildcards(os.path.join(checkpoint_output, '{sample}_{chunk}.vcf'))
     samples = globs.sample
     chunks = globs.chunk
 

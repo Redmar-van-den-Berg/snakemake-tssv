@@ -24,7 +24,7 @@
     - path: sample1/library/000.lib
     - path: sample1/library/005.lib
 
-    - path: sample1/tssv/001-forward/chrM:16023/newalleles.csv
+    - path: sample1/tssv/005-forward/chrM:16023/newalleles.csv
 
 - name: integration-two-samples
   tags:

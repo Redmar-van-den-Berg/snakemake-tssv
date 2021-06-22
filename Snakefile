@@ -6,7 +6,6 @@ rule all:
     input:
         outfile = expand('{sample}/vcf', sample=pep.sample_table.index),
         reports = expand('{sample}/tssv/reports.txt', sample=pep.sample_table.index),
-        libraries = expand('merge_{sample}.txt', sample=pep.sample_table.index)
 
 checkpoint split_vcf:
     """ Split the variants over multiple files """
@@ -73,16 +72,6 @@ rule create_tssv_config:
             --vcf {input.vcf} \
             --flank-size {params.flank_size} \
             --max-size {params.max_indel_size} > {output}
-    """
-
-rule temp_merge_tssv:
-    input: gather_libraries
-    output: 'merge_{sample}.txt'
-    log: 'log/merge_{sample}.txt'
-    container:
-        containers['debian']
-    shell: """
-        cat {input} > {output}
     """
 
 rule run_tssv:

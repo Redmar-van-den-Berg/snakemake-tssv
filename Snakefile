@@ -5,6 +5,7 @@ include: "common.smk"
 rule all:
     input:
         outfile = expand('{sample}/vcf', sample=pep.sample_table.index),
+        reports = expand("{sample}/tssv/reports.txt", sample=pep.sample_table.index),
         libraries = expand("merge_{sample}.txt", sample=pep.sample_table.index)
 
 checkpoint split_vcf:
@@ -82,4 +83,46 @@ rule temp_merge_tssv:
         containers["debian"]
     shell: """
         cat {input} > {output}
+    """
+
+rule run_tssv:
+    input:
+        library = "{sample}/library/{chunk}.lib",
+        fastq = lambda wc: pep.sample_table.loc[wc.sample, wc.fastq],
+    output:
+        folder = directory("{sample}/tssv/{chunk}-{fastq}/"),
+        report = "{sample}/tssv/{chunk}-{fastq}.txt"
+    log:
+        "log/tssv_{sample}_{chunk}_{fastq}.txt"
+    container:
+        containers['tssv']
+    shell: """
+        tssv \
+            -r {output.report} \
+            -d {output.folder} \
+            {input.fastq} \
+            {input.library}
+    """
+
+rule list_report_files:
+    """
+    This is a dummy rule, used to trigger the checkpoint
+
+    The number of report files are determined by the checkpoint, and hence cannot be
+    known before the pipeline runs. Therefore, there is no way to include the
+    report files in the 'all' rule.
+
+    This rule consumes the checkpoint for each sample, and writes a simple text file that holds
+    all report files. The output of this rule is a target for the 'all' rule.
+    """
+    input:
+        gather_tssv_reports
+    output:
+        "{sample}/tssv/reports.txt"
+    log:
+        "log/list_report_files_{sample}.txt"
+    container:
+        containers["debian"]
+    shell: """
+        ls {input} > {output} 2>{log}
     """

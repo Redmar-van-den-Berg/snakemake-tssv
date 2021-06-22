@@ -56,8 +56,8 @@ rule create_tssv_config:
     """ Create configuration files for tssv """
     input:
         vcf = '{sample}/vcf/{sample}_{chunk}.vcf',
-        ref = 'tests/data/reference/ref.fa',
-        scr = 'scripts/create-library.py'
+        ref = pep.config.reference,
+        create_library = srcdir('scripts/create-library.py')
     params:
         flank_size = 20,
         max_indel_size = 20
@@ -68,7 +68,7 @@ rule create_tssv_config:
     container:
         containers['tssv-library']
     shell: """
-        {input.scr} \
+        {input.create_library} \
             --reference {input.ref} \
             --vcf {input.vcf} \
             --flank-size {params.flank_size} \

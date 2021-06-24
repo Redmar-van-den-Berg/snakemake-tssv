@@ -20,6 +20,7 @@ jobs:
           - dry-run-minimal
           - integration-one-sample
           - integration-two-samples
+          - integration-all-options
     steps:
     - uses: actions/checkout@v2
 

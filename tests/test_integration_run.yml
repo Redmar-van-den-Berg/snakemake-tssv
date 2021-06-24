@@ -64,3 +64,28 @@
 
     - path: sample1/tssv/001-forward/chrM:16023/newalleles.csv
     - path: sample2/tssv/001-forward/chrM:16023/newalleles.csv
+
+- name: integration-all-options
+  tags:
+    - dry-run
+  command: >
+    snakemake
+      --reason
+      --printshellcmds
+      --jobs 1
+      --latency-wait 120
+      --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --config pepfile=tests/pep/project_config_all_options.yml
+      --snakefile Snakefile
+  exit_code: 0
+  stderr:
+    contains:
+      - "--flank-size 27"
+      - "--max-size 23"
+    contains_regex:
+      - "split.*--lines 11"
+    must_not_contain:
+      - rror
+  stderr:
+    must_not_contain:
+      - rror

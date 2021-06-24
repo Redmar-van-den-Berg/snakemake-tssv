@@ -29,10 +29,11 @@ def gather_tssv_reports(wildcards):
 
     return reports
 
-def set_default_variants_per_file():
-    try:
-        pep.config.variants_per_file
-    except AttributeError:
-        pep.config.variants_per_file = 50
+def set_default(key, value):
+    """ Set configuration for key to value, if not yet set """
+    if key not in pep.config:
+        pep.config[key] = value
 
-set_default_variants_per_file()
+set_default('variants_per_file', 50)
+set_default('flank_size', 20)
+set_default('max_indel_size', 20)

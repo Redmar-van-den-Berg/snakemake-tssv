@@ -12,7 +12,7 @@ checkpoint split_vcf:
     input:
         vcf = lambda wc: pep.sample_table.loc[wc.sample, 'vcf']
     params:
-        variants_per_file = pep.config.variants_per_file
+        variants_per_file = pep.config['variants_per_file']
     output:
         directory('{sample}/vcf/')
     log:
@@ -55,11 +55,11 @@ rule create_tssv_config:
     """ Create configuration files for tssv """
     input:
         vcf = '{sample}/vcf/{sample}_{chunk}.vcf',
-        ref = pep.config.reference,
+        ref = pep.config['reference'],
         create_library = srcdir('scripts/create-library.py')
     params:
-        flank_size = 20,
-        max_indel_size = 20
+        flank_size = pep.config['flank_size'],
+        max_indel_size = pep.config['max_indel_size']
     output:
         '{sample}/library/{chunk}.lib'
     log:

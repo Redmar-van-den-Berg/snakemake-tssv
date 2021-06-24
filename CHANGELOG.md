@@ -10,6 +10,9 @@ that users understand how the changes affect the new version.
 
 v0.0.1
 ---------------------------
++ The number of variants per file can now be configured (default=50).
++ The maximum indel size to include can now be configured (default=20).
++ The flanking size around the variants can now be configured (default=20).
 + Add reference to the project configuration.
 + Add support for project configuration using
 [PEP](http://pep.databio.org/en/latest/).

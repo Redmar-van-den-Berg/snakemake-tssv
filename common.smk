@@ -37,3 +37,4 @@ def set_default(key, value):
 set_default('variants_per_file', 50)
 set_default('flank_size', 20)
 set_default('max_indel_size', 20)
+set_default('output_folder', False)

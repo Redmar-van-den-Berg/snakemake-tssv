@@ -10,6 +10,8 @@ that users understand how the changes affect the new version.
 
 v0.0.1
 ---------------------------
++ TSSV output folder is disabled by default. It can be enabled by setting
+`output_folder: true` in the project configuration.
 + The number of variants per file can now be configured (default=50).
 + The maximum indel size to include can now be configured (default=20).
 + The flanking size around the variants can now be configured (default=20).

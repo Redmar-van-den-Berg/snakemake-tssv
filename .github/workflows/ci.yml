@@ -19,6 +19,7 @@ jobs:
           - sanity-singularity
           - dry-run-minimal
           - integration-one-sample
+          - integration-output-folder
           - integration-two-samples
           - integration-all-options
     steps:

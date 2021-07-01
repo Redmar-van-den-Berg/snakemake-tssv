@@ -25,6 +25,35 @@
     - path: sample1/library/005.lib
 
     - path: sample1/tssv/005-forward/chrM:16023/newalleles.csv
+      should_exist: false
+
+- name: integration-output-folder
+  tags:
+    - integration
+  command: >
+    snakemake
+      --reason
+      --printshellcmds
+      --jobs 1
+      --latency-wait 120
+      --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --config pepfile=tests/pep/project_config_output_folder.yml
+      --snakefile Snakefile
+  stderr:
+    must_not_contain:
+      - rror
+  files:
+    - path: sample1/vcf/sample1_000.vcf
+    - path: sample1/vcf/sample1_005.vcf
+    - path: sample1/vcf/x000
+      should_exist: false
+    - path: sample1/vcf/sample1.vcf
+      should_exist: false
+
+    - path: sample1/library/000.lib
+    - path: sample1/library/005.lib
+
+    - path: sample1/tssv/005-forward/chrM:16023/newalleles.csv
 
 - name: integration-two-samples
   tags:
@@ -61,9 +90,6 @@
 
     - path: sample1/library/000.lib
     - path: sample2/library/000.lib
-
-    - path: sample1/tssv/001-forward/chrM:16023/newalleles.csv
-    - path: sample2/tssv/001-forward/chrM:16023/newalleles.csv
 
 - name: integration-all-options
   tags:

@@ -79,7 +79,7 @@ rule run_tssv:
         library = '{sample}/library/{chunk}.lib',
         fastq = lambda wc: pep.sample_table.loc[wc.sample, wc.fastq],
     params:
-        folder = '-d {sample}/tssv/{chunk}-{fastq}/'
+        folder = '-d {sample}/tssv/{chunk}-{fastq}/' if pep.config['output_folder'] else ''
     output:
         report = '{sample}/tssv/{chunk}-{fastq}.txt'
     log:

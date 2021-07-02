@@ -11,12 +11,13 @@ for details.
 | Configuration     | Default value | Explanation |
 | -------------     | ------------- | ----------- |
 | pep_version       | 2.0.0         | Version of the pep standard to use. |
-| sample_table      | None          | CSV file with sample information, in a path relative to the project_config.yml file. See [here](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/one-sample.csv) for an example. |
-| variants_per_file | 50            | How many variants should be analysed at once.  Lower values with distribute the analysis over more, smaller jobs. |
+| sample_table      | **required**  | CSV file with sample information, in a path relative to the project_config.yml file. See [here](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/one-sample.csv) for an example. |
+| vcf               | **required**  | A VCF file with variants to analyse using TSSV. |
+| reference         | **required**  | The reference that was used to generated the VCF file. Is used to extract the flanking regions for the TSSV library. |
 | flank_size        | 20            | The size of the flanking regions around the variants. |
 | max_indel_size    | 20            | The maximum size of indels from the VCF file to include in the analysis. |
 | output_folder     | false         | Enables the output folder for TSSV. **Should be used carefully, since it will output all fastq data, uncompressed.** |
-| reference         | None          | The reference that was used to generated the VCF file. Is used to extract the flanking regions for the TSSV library. |
+| variants_per_file | 50            | How many variants should be analysed at once.  Lower values with distribute the analysis over more, smaller jobs. |
 
 
 ## Caveats and known issues

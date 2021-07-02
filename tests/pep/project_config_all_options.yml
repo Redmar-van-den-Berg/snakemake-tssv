@@ -3,4 +3,5 @@ sample_table: one-sample.csv
 variants_per_file: 11
 flank_size: 27
 max_indel_size: 23
+output_folder: true
 reference: tests/data/reference/ref.fa

@@ -14,17 +14,15 @@
     must_not_contain:
       - rror
   files:
-    - path: sample1/vcf/sample1_000.vcf
-    - path: sample1/vcf/sample1_005.vcf
-    - path: sample1/vcf/x000
-      should_exist: false
-    - path: sample1/vcf/sample1.vcf
+    - path: split-vcf/000.vcf
+    - path: split-vcf/005.vcf
+    - path: split-vcf/x000
       should_exist: false
 
-    - path: sample1/library/000.lib
-    - path: sample1/library/005.lib
+    - path: library/000.lib
+    - path: library/005.lib
 
-    - path: sample1/tssv/005-forward/chrM:16023/newalleles.csv
+    - path: tssv/005-forward/chrM:16023/newalleles.csv
       should_exist: false
 
 - name: integration-output-folder
@@ -43,15 +41,13 @@
     must_not_contain:
       - rror
   files:
-    - path: sample1/vcf/sample1_000.vcf
-    - path: sample1/vcf/sample1_005.vcf
-    - path: sample1/vcf/x000
-      should_exist: false
-    - path: sample1/vcf/sample1.vcf
+    - path: split-vcf/000.vcf
+    - path: split-vcf/005.vcf
+    - path: split-vcf/x000
       should_exist: false
 
-    - path: sample1/library/000.lib
-    - path: sample1/library/005.lib
+    - path: library/000.lib
+    - path: library/005.lib
 
     - path: sample1/tssv/005-forward/chrM:16023/newalleles.csv
 
@@ -71,29 +67,25 @@
     must_not_contain:
       - rror
   files:
-    - path: sample1/vcf/sample1_000.vcf
-    - path: sample1/vcf/sample1_001.vcf
-    - path: sample1/vcf/sample1_005.vcf
+    - path: split-vcf/000.vcf
+    - path: split-vcf/001.vcf
+    - path: split-vcf/005.vcf
       should_exist: false
-    - path: sample1/vcf/x000
+    - path: split-vcf/x000
       should_exist: false
-    - path: sample1/vcf/sample1.vcf
+    - path: split-vcf/000.vcf
+    - path: split-vcf/001.vcf
+    - path: split-vcf/005.vcf
       should_exist: false
-    - path: sample2/vcf/sample2_000.vcf
-    - path: sample2/vcf/sample2_001.vcf
-    - path: sample2/vcf/sample2_005.vcf
-      should_exist: false
-    - path: sample2/vcf/x000
-      should_exist: false
-    - path: sample2/vcf/sample2.vcf
+    - path: vcf/x000
       should_exist: false
 
-    - path: sample1/library/000.lib
-    - path: sample2/library/000.lib
+    - path: library/000.lib
+    - path: library/000.lib
 
 - name: integration-all-options
   tags:
-    - dry-run
+    - integration
   command: >
     snakemake
       --reason

@@ -4,19 +4,18 @@ include: 'common.smk'
 
 rule all:
     input:
-        outfile = expand('{sample}/vcf', sample=pep.sample_table.index),
         reports = expand('{sample}/tssv/reports.txt', sample=pep.sample_table.index),
 
 checkpoint split_vcf:
     """ Split the variants over multiple files """
     input:
-        vcf = lambda wc: pep.sample_table.loc[wc.sample, 'vcf']
+        vcf = pep.config['vcf']
     params:
         variants_per_file = pep.config['variants_per_file']
     output:
-        directory('{sample}/vcf/')
+        directory('split-vcf')
     log:
-        'log/{sample}_split_vcf.txt'
+        'log/split_vcf.txt'
     container:
         containers['debian']
     shell: """
@@ -24,13 +23,12 @@ checkpoint split_vcf:
 
         mkdir -p {output}
 
-        zcat {input.vcf} > {output}/{wildcards.sample}.vcf
-
-        cd {output}
 
         # Split the header from the variants
-        grep '^#' {wildcards.sample}.vcf > header.txt
-        grep -v '^#' {wildcards.sample}.vcf > variants.txt
+        grep '^#' {input.vcf} > {output}/header.txt
+        grep -v '^#' {input.vcf} > {output}/variants.txt
+
+        cd {output}
 
         # Split the variants into separate files
         split \
@@ -41,29 +39,28 @@ checkpoint split_vcf:
 
         # Combine the split variants with the full header
         for i in x*; do
-            cat header.txt ${{i}} > {wildcards.sample}_${{i#x}}.vcf
+            cat header.txt ${{i}} > ${{i#x}}.vcf
         done
 
         # Remove intermediate files
         rm header.txt
         rm variants.txt
         rm x*
-        rm {wildcards.sample}.vcf
     """
 
 rule create_tssv_config:
     """ Create configuration files for tssv """
     input:
-        vcf = '{sample}/vcf/{sample}_{chunk}.vcf',
+        vcf = 'split-vcf/{chunk}.vcf',
         ref = pep.config['reference'],
         create_library = srcdir('scripts/create-library.py')
     params:
         flank_size = pep.config['flank_size'],
         max_indel_size = pep.config['max_indel_size']
     output:
-        '{sample}/library/{chunk}.lib'
+        'library/{chunk}.lib'
     log:
-        'log/{sample}_library_{chunk}.txt'
+        'log/library_{chunk}.txt'
     container:
         containers['tssv-library']
     shell: """
@@ -76,7 +73,7 @@ rule create_tssv_config:
 
 rule run_tssv:
     input:
-        library = '{sample}/library/{chunk}.lib',
+        library = 'library/{chunk}.lib',
         fastq = lambda wc: pep.sample_table.loc[wc.sample, wc.fastq],
     params:
         folder = '-d {sample}/tssv/{chunk}-{fastq}/' if pep.config['output_folder'] else ''

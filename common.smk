@@ -16,16 +16,17 @@ def gather_tssv_reports(wildcards):
     checkpoint_output = checkpoints.split_vcf.get(**wildcards).output[0]
 
     # Glob the sample and chunks from the split vcf file
-    globs = glob_wildcards(os.path.join(checkpoint_output, '{sample}_{chunk}.vcf'))
-    samples = globs.sample
+    globs = glob_wildcards(os.path.join(checkpoint_output, '{chunk}.vcf'))
+    samples = pep.sample_table.index
     chunks = globs.chunk
 
-    # For each sample and library(chunk), we have both a forward and a reverse fastq
-    # file that is analysed
+    # We will get a report file for each sample, for each chunk, for both the
+    # forward and reverse reads
     reports = list()
-    for sample, chunk in zip(samples, chunks):
-        for fastq in ['forward', 'reverse']:
-            reports.append(f'{sample}/tssv/{chunk}-{fastq}.txt')
+    for sample in samples:
+        for chunk in chunks:
+            for fastq in ['forward', 'reverse']:
+                reports.append(f'{sample}/tssv/{chunk}-{fastq}.txt')
 
     return reports
 

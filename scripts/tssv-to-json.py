@@ -15,7 +15,7 @@ def parse_section(fin):
 
     # Get the header
     header = next(fin).strip().split()
-    
+
     # Parse the other files
     for line in fin:
         # End of section
@@ -33,7 +33,7 @@ def parse_section(fin):
                 pass
 
         section.append(allele)
-        
+
     return section
 
 def read_tssv(filename):
@@ -41,11 +41,37 @@ def read_tssv(filename):
     known_allele = "known alleles for marker "
     new_allele = "new alleles for marker "
 
-    data = dict() 
+    # Lines to skip
+    skip = [
+        'total reads\t\d',
+        'matched pairs\t\d',
+        'new alleles\t\d',
+        'new unique alleles\t\d',
+        'no start\t\d',
+        'no end\t\d',
+        'unrecognised reads\t\d',
+        '\n'
+    ]
+
+    data = dict()
 
     with open(filename) as fin:
-        # This top level always points to a new section
+        # This top level always points to a new section, or we skip
         for line in fin:
+            # There are a bunch of lines in the report that we skip
+            if any(re.match(regex, line) for regex in skip):
+                continue
+
+            # This is a section that we should skip, instead of a single line
+            # So once we find it, we skip every line untill we come to an empty
+            # line
+            if re.match('name\tfPaired', line):
+                line = next(fin)
+                while line != '\n':
+                    line = next(fin)
+                    print(f'Inner line: {line}')
+                continue
+
             # Make sure marker is in the data
             marker = line.strip().split()[4]
 

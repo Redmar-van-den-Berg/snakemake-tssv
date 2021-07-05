@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 v0.0.1
 ---------------------------
++ Parse the tssv output into json.
 + Use an uncompressed vcf file as input.
 + Define the vcf input in the project configuration, instead of per sample.
 + TSSV output folder is disabled by default. It can be enabled by setting

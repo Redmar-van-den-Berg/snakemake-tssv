@@ -88,7 +88,22 @@ rule run_tssv:
             -r {output.report} \
             {params} \
             {input.fastq} \
-            {input.library}
+            {input.library} 2> {log}
+    """
+
+rule tssv_to_json:
+    input:
+        json_script = srcdir('scripts/tssv-to-json.py'),
+        report = rules.run_tssv.output.report
+    output:
+        '{sample}/tssv/{chunk}-{fastq}.json'
+    log:
+        'log/tssv_to_json_{sample}_{chunk}_{fastq}.txt'
+    container:
+        containers['tssv']
+    shell: """
+        {input.json_script} \
+            --tssv {input.report} > {output} 2> {log}
     """
 
 rule list_report_files:
@@ -103,7 +118,8 @@ rule list_report_files:
     all report files. The output of this rule is a target for the 'all' rule.
     """
     input:
-        gather_tssv_reports
+        text_report = gather_tssv_reports,
+        json_report = lambda wc: [x.replace('.txt', '.json') for x in gather_tssv_reports(wc)]
     output:
         '{sample}/tssv/reports.txt'
     log:
@@ -111,5 +127,5 @@ rule list_report_files:
     container:
         containers['debian']
     shell: """
-        ls {input} > {output} 2>{log}
+        ls {input.text_report} {input.json_report} > {output} 2>{log}
     """

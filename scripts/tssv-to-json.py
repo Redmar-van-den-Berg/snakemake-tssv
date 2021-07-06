@@ -69,7 +69,6 @@ def read_tssv(filename):
                 line = next(fin)
                 while line != '\n':
                     line = next(fin)
-                    print(f'Inner line: {line}')
                 continue
 
             # Make sure marker is in the data
@@ -96,7 +95,7 @@ def read_tssv(filename):
             # We should never reach this
             else:
                 raise RuntimeError
-    return data
+    return {'marker': data}
 
 def main(args):
     data = read_tssv(args.tssv)

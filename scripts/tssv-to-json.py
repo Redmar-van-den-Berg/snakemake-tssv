@@ -14,16 +14,16 @@ def parse_section(fin):
     section = list()
 
     # Get the header
-    header = next(fin).strip().split()
+    header = next(fin).strip('\n').split('\t')
 
     # Parse the other files
     for line in fin:
         # End of section
-        if not line.strip():
+        if not line.strip('\n'):
             break
 
         # Extract the data for an allele
-        allele = {k:v for k, v in zip(header, line.strip().split())}
+        allele = {k:v for k, v in zip(header, line.strip('\n').split('\t'))}
 
         # The allele field can be "A", or "A(1.0)". So sometimes, we need to
         # clean the allele
@@ -81,7 +81,7 @@ def read_tssv(filename):
                 continue
 
             # Make sure marker is in the data
-            marker = line.strip().split()[4]
+            marker = line.strip('\n').split()[4]
 
             # A line like known alleles for marker chrM:152:
             # instead of new alleles for marker chrM:152 (mean length 1.0):

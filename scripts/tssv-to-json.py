@@ -25,6 +25,15 @@ def parse_section(fin):
         # Extract the data for an allele
         allele = {k:v for k, v in zip(header, line.strip().split())}
 
+        # The allele field can be "A", or "A(1.0)". So sometimes, we need to
+        # clean the allele
+        al = allele['allele']
+        try:
+            i = al.index('(')
+            allele['allele'] = al[:i]
+        except ValueError:
+            pass
+
         # Convert all counts to int
         for key in allele:
             try:

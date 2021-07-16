@@ -26,7 +26,7 @@ def gather_tssv_reports(wildcards):
     for sample in samples:
         for chunk in chunks:
             for fastq in ['forward', 'reverse']:
-                reports.append(f'{sample}/tssv/{chunk}-{fastq}.txt')
+                reports.append(f'{sample}/tssv/{chunk}-{fastq}.json')
 
     return reports
 

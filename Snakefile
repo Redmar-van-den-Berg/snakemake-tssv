@@ -118,8 +118,7 @@ rule merge_report_files:
     all report files. The output of this rule is a target for the 'all' rule.
     """
     input:
-        text_report = gather_tssv_reports,
-        json_report = lambda wc: [x.replace('.txt', '.json') for x in gather_tssv_reports(wc)],
+        json_report = gather_tssv_reports,
         merge_tssv = srcdir('scripts/merge-tssv.py')
     output:
         '{sample}/tssv/merged.json'

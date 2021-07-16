@@ -4,7 +4,7 @@ include: 'common.smk'
 
 rule all:
     input:
-        merged = expand('{sample}/tssv/merged.json', sample=pep.sample_table.index),
+        final_report = 'final_report.csv'
 
 checkpoint split_vcf:
     """ Split the variants over multiple files """
@@ -128,4 +128,27 @@ rule merge_report_files:
         containers['tssv']
     shell: """
         python {input.merge_tssv} --files {input.json_report} > {output} 2>{log}
+    """
+
+rule combine_samples:
+    """
+    Combine the merged data for each sample into a single tsv file
+    """
+    input:
+        reports = expand('{sample}/tssv/merged.json', sample=pep.sample_table.index),
+        combine_samples = srcdir('scripts/combine-samples.py'),
+    params:
+        names = [sample for sample in pep.sample_table.index]
+    output:
+        final_report = 'final_report.csv'
+    log:
+        'log/final_report.txt'
+    container:
+        containers['tssv']
+    shell: """
+        python {input.combine_samples} \
+                --files {input.reports} \
+                --names {params.names} \
+                > {output.final_report} \
+                2> {log}
     """

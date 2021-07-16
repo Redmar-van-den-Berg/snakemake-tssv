@@ -13,6 +13,7 @@
     contains:
       - variants.txt
       - merge_report_files
+      - combine_samples
     contains_regex:
       - "split.*--lines 50"
     must_not_contain:

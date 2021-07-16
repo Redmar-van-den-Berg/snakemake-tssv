@@ -39,6 +39,8 @@
 
     - path: sample1/tssv/merged.json
 
+    - path: final_report.csv
+
 - name: integration-output-folder
   tags:
     - integration

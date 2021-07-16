@@ -12,6 +12,7 @@
   stdout:
     contains:
       - variants.txt
+      - merge_report_files
     contains_regex:
       - "split.*--lines 50"
     must_not_contain:

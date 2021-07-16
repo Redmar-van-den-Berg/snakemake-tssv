@@ -37,6 +37,8 @@
     - path: sample1/tssv/005-reverse.txt
     - path: sample1/tssv/005-reverse.json
 
+    - path: sample1/tssv/merged.json
+
 - name: integration-output-folder
   tags:
     - integration

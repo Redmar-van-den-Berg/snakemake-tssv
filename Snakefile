@@ -5,6 +5,7 @@ include: 'common.smk'
 rule all:
     input:
         reports = expand('{sample}/tssv/reports.txt', sample=pep.sample_table.index),
+        merged = expand('{sample}/tssv/merged.json', sample=pep.sample_table.index),
 
 checkpoint split_vcf:
     """ Split the variants over multiple files """
@@ -128,4 +129,29 @@ rule list_report_files:
         containers['debian']
     shell: """
         ls {input.text_report} {input.json_report} > {output} 2>{log}
+    """
+    
+rule merge_report_files:
+    """
+    This is a dummy rule, used to trigger the checkpoint
+
+    The number of report files are determined by the checkpoint, and hence cannot be
+    known before the pipeline runs. Therefore, there is no way to include the
+    report files in the 'all' rule.
+
+    This rule consumes the checkpoint for each sample, and writes a simple text file that holds
+    all report files. The output of this rule is a target for the 'all' rule.
+    """
+    input:
+        text_report = gather_tssv_reports,
+        json_report = lambda wc: [x.replace('.txt', '.json') for x in gather_tssv_reports(wc)],
+        merge_tssv = srcdir('scripts/merge-tssv.py')
+    output:
+        '{sample}/tssv/merged.json'
+    log:
+        'log/merge_report_files_{sample}.txt'
+    container:
+        containers['tssv']
+    shell: """
+        python {input.merge_tssv} --files {input.json_report} > {output} 2>{log}
     """

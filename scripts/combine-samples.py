@@ -27,7 +27,12 @@ def main(args):
     # Print the data
     for marker in alleles:
         for allele in alleles[marker]:
-            sample_data = [data[sample][marker][allele]['total'] for sample in args.names]
+            sample_data = list()
+            for sample in args.names:
+                try:
+                    total = data[sample][marker][allele]['total']
+                except KeyError:
+                    total = 0
             print(marker, allele, *sample_data, sep='\t')
 
 

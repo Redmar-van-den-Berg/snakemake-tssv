@@ -33,6 +33,7 @@ def main(args):
                     total = data[sample][marker][allele]['total']
                 except KeyError:
                     total = 0
+                sample_data.append(total)
             print(marker, allele, *sample_data, sep='\t')
 
 

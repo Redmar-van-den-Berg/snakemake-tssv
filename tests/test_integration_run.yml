@@ -106,6 +106,8 @@
       contains:
         - "Marker	Allele	sample1	sample2"
         - "chrM:8860	G	53	47"
+        - "chrM:16023	G	32	28"
+        - "chrM:16023	A	24	28"
 
 - name: integration-all-options
   tags:

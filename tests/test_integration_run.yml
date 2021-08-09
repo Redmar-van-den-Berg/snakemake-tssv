@@ -82,6 +82,9 @@
   stderr:
     must_not_contain:
       - rror
+    must_not_contain_regex:
+      - "python .*merge-tssv.py --files .*sample1.*sample2"
+      - "python .*merge-tssv.py --files .*sample2.*sample1"
   files:
     - path: split-vcf/000.vcf
     - path: split-vcf/001.vcf

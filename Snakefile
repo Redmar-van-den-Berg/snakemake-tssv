@@ -108,8 +108,6 @@ rule tssv_to_json:
 
 rule merge_report_files:
     """
-    This is a dummy rule, used to trigger the checkpoint
-
     The number of report files are determined by the checkpoint, and hence cannot be
     known before the pipeline runs. Therefore, there is no way to include the
     report files in the 'all' rule.

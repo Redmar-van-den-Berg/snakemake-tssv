@@ -20,13 +20,12 @@ def gather_tssv_reports(wildcards):
     samples = pep.sample_table.index
     chunks = globs.chunk
 
-    # We will get a report file for each sample, for each chunk, for both the
-    # forward and reverse reads
+    # We will get a report file for each chunk, for both the
+    # forward and reverse reads from the sample
     reports = list()
-    for sample in samples:
-        for chunk in chunks:
-            for fastq in ['forward', 'reverse']:
-                reports.append(f'{sample}/tssv/{chunk}-{fastq}.json')
+    for chunk in chunks:
+        for fastq in ['forward', 'reverse']:
+            reports.append(f'{wildcards.sample}/tssv/{chunk}-{fastq}.json')
 
     return reports
 

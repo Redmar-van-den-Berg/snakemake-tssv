@@ -102,6 +102,11 @@
     - path: library/000.lib
     - path: library/000.lib
 
+    - path: final_report.csv
+      contains:
+        - "Marker	Allele	sample1	sample2"
+        - "chrM:8860	G	53	47"
+
 - name: integration-all-options
   tags:
     - integration

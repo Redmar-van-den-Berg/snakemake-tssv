@@ -12,6 +12,10 @@ for details.
 | -------------     | ------------- | ----------- |
 | pep_version       | 2.0.0         | Version of the pep standard to use. |
 | sample_table      | **required**  | CSV file with sample information, in a path relative to the project_config.yml file. See [here](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/one-sample.csv) for an example. |
+| snakemake-tssv    | **required**  | Subsection for pipeline specific settings, which are listed below. |
+
+| snakemake-tssv    | Default value | Explanation |
+| -------------     | ------------- | ----------- |
 | vcf               | **required**  | A VCF file with variants to analyse using TSSV. |
 | reference         | **required**  | The reference that was used to generated the VCF file. Is used to extract the flanking regions for the TSSV library. |
 | flank_size        | 20            | The size of the flanking regions around the variants. |

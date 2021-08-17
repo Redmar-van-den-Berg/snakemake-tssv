@@ -1,5 +1,5 @@
-
 pepfile: config['pepfile']
+config = pep.config['snakemake-tssv']
 include: 'common.smk'
 
 rule all:
@@ -9,9 +9,9 @@ rule all:
 checkpoint split_vcf:
     """ Split the variants over multiple files """
     input:
-        vcf = pep.config['vcf']
+        vcf = config['vcf']
     params:
-        variants_per_file = pep.config['variants_per_file']
+        variants_per_file = config['variants_per_file']
     output:
         directory('split-vcf')
     log:
@@ -52,11 +52,11 @@ rule create_tssv_config:
     """ Create configuration files for tssv """
     input:
         vcf = 'split-vcf/{chunk}.vcf',
-        ref = pep.config['reference'],
+        ref = config['reference'],
         create_library = srcdir('scripts/create-library.py')
     params:
-        flank_size = pep.config['flank_size'],
-        max_indel_size = pep.config['max_indel_size']
+        flank_size = config['flank_size'],
+        max_indel_size = config['max_indel_size']
     output:
         'library/{chunk}.lib'
     log:
@@ -76,7 +76,7 @@ rule run_tssv:
         library = 'library/{chunk}.lib',
         fastq = lambda wc: pep.sample_table.loc[wc.sample, wc.fastq],
     params:
-        folder = '-d {sample}/tssv/{chunk}-{fastq}/' if pep.config['output_folder'] else ''
+        folder = '-d {sample}/tssv/{chunk}-{fastq}/' if config['output_folder'] else ''
     output:
         report = '{sample}/tssv/{chunk}-{fastq}.txt'
     log:

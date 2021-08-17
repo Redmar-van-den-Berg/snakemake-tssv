@@ -31,8 +31,8 @@ def gather_tssv_reports(wildcards):
 
 def set_default(key, value):
     """ Set configuration for key to value, if not yet set """
-    if key not in pep.config:
-        pep.config[key] = value
+    if key not in config:
+        config[key] = value
 
 set_default('variants_per_file', 50)
 set_default('flank_size', 20)

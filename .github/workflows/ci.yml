@@ -22,6 +22,7 @@ jobs:
           - integration-output-folder
           - integration-two-samples
           - integration-all-options
+          - integration-subsamples
     steps:
     - uses: actions/checkout@v2
 

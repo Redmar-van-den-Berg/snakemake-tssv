@@ -4,18 +4,22 @@
 Snakemake pipeline to run TSSV against on or more VCF files.
 
 ## Settings
-You can set the settings in the pep configuration, see this [example
+Both the sample inputs and the configuration for the pipeline are set using
+[PEP](http://pep.databio.org/en/2.0.0/). Please view this [example
 configuration](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/project_config_all_options.yml)
-for details.
+for all available options.
+
+### PEP settings
+The top level settings for the PEP configuration are listed below.
 
 | Configuration     | Default value | Explanation |
 | -------------     | ------------- | ----------- |
 | pep_version       | 2.0.0         | Version of the pep standard to use. |
-| sample_table      | **required**  | CSV file with sample information, in a path relative to the project_config.yml file. See [here](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/one-sample.csv) for an example. |
-| snakemake-tssv    | **required**  | Subsection for pipeline specific settings, which are listed below. |
+| sample_table      | **required**  | CSV file with sample information, the path to the CSV is relative to the project_config.yml file. See [here](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/one-sample.csv) for an example. |
+| snakemake-tssv    | **required**  | Subsection for pipeline specific settings, see below. |
 
 ### Pipeline specific settings
-The pipeline specific settings listed below should be placed under the
+The pipeline specific settings should be placed under the
 `snakemake-tssv` section, see this [example
 configuration](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/project_config_all_options.yml)
 for details.

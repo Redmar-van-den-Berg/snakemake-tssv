@@ -74,13 +74,13 @@ rule create_tssv_config:
 rule run_tssv:
     input:
         library = 'library/{chunk}.lib',
-        fastq = lambda wc: pep.sample_table.loc[wc.sample, wc.fastq],
+        fastq = get_fastq_file,
     params:
-        folder = '-d {sample}/tssv/{chunk}-{fastq}/' if config['output_folder'] else ''
+        folder = '-d {sample}/{readgroup}/{chunk}-{fastq}/' if config['output_folder'] else ''
     output:
-        report = '{sample}/tssv/{chunk}-{fastq}.txt'
+        report = '{sample}/{readgroup}/{chunk}-{fastq}.txt'
     log:
-        'log/tssv_{sample}_{chunk}_{fastq}.txt'
+        'log/tssv_{sample}_{readgroup}_{chunk}_{fastq}.txt'
     container:
         containers['tssv']
     shell: """
@@ -96,9 +96,9 @@ rule tssv_to_json:
         json_script = srcdir('scripts/tssv-to-json.py'),
         report = rules.run_tssv.output.report
     output:
-        '{sample}/tssv/{chunk}-{fastq}.json'
+        '{sample}/{readgroup}/{chunk}-{fastq}.json'
     log:
-        'log/tssv_to_json_{sample}_{chunk}_{fastq}.txt'
+        'log/tssv_to_json_{sample}_{readgroup}_{chunk}_{fastq}.txt'
     container:
         containers['tssv']
     shell: """
@@ -112,14 +112,14 @@ rule merge_report_files:
     known before the pipeline runs. Therefore, there is no way to include the
     report files in the 'all' rule.
 
-    This rule consumes the checkpoint for each sample, and writes a simple text file that holds
-    all report files. The output of this rule is a target for the 'all' rule.
+    This rule consumes the checkpoint for each sample, and merges all report
+    files for sample into a single json file.
     """
     input:
         json_report = gather_tssv_reports,
         merge_tssv = srcdir('scripts/merge-tssv.py')
     output:
-        '{sample}/tssv/merged.json'
+        '{sample}/merged.json'
     log:
         'log/merge_report_files_{sample}.txt'
     container:
@@ -133,7 +133,7 @@ rule combine_samples:
     Combine the merged data for each sample into a single tsv file
     """
     input:
-        reports = expand('{sample}/tssv/merged.json', sample=pep.sample_table.index),
+        reports = expand('{sample}/merged.json', sample=pep.sample_table.index),
         combine_samples = srcdir('scripts/combine-samples.py'),
     params:
         names = [sample for sample in pep.sample_table.index]

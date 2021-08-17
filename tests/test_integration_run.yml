@@ -25,19 +25,19 @@
     - path: tssv/005-forward/chrM:16023/newalleles.csv
       should_exist: false
 
-    - path: sample1/tssv/000-forward.txt
-    - path: sample1/tssv/000-forward.json
+    - path: sample1/readgroup_1/000-forward.txt
+    - path: sample1/readgroup_1/000-forward.json
 
-    - path: sample1/tssv/000-reverse.txt
-    - path: sample1/tssv/000-reverse.json
+    - path: sample1/readgroup_1/000-reverse.txt
+    - path: sample1/readgroup_1/000-reverse.json
 
-    - path: sample1/tssv/005-forward.txt
-    - path: sample1/tssv/005-forward.json
+    - path: sample1/readgroup_1/005-forward.txt
+    - path: sample1/readgroup_1/005-forward.json
 
-    - path: sample1/tssv/005-reverse.txt
-    - path: sample1/tssv/005-reverse.json
+    - path: sample1/readgroup_1/005-reverse.txt
+    - path: sample1/readgroup_1/005-reverse.json
 
-    - path: sample1/tssv/merged.json
+    - path: sample1/merged.json
 
     - path: final_report.csv
 
@@ -65,7 +65,7 @@
     - path: library/000.lib
     - path: library/005.lib
 
-    - path: sample1/tssv/005-forward/chrM:16023/newalleles.csv
+    - path: sample1/readgroup_1/005-forward/chrM:16023/newalleles.csv
 
 - name: integration-two-samples
   tags:
@@ -133,3 +133,39 @@
   stderr:
     must_not_contain:
       - rror
+
+- name: integration-subsamples
+  tags:
+    - integration
+  command: >
+    snakemake
+      --reason
+      --printshellcmds
+      --jobs 1
+      --latency-wait 120
+      --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --config pepfile=tests/pep/project_config_subsamples.yml
+      --snakefile Snakefile
+  stderr:
+    contains_regex:
+      # Make sure a single forward/reverse pair specified in three-samples.csv work
+      # properly.
+      - "sample1/readgroup_1.*micro_rg1_R1.fq.gz"
+      - "sample1/readgroup_1.*micro_rg1_R2.fq.gz"
+
+      # Make sure multiple forward/reverse pairs are handled properly through
+      # the subsamples.csv file.
+      # Also explicitly check that the readgroup_[1,2,3] designations that are
+      # automatically assigned work properly. Note that for readgroup_3, the
+      # forward and reverse reads have been switched in the configuration file.
+      - "sample2/readgroup_1/000-forward.*micro_rg1_R1.fq.gz"
+      - "sample2/readgroup_1/000-reverse.*micro_rg1_R2.fq.gz"
+      - "sample2/readgroup_2.*micro_rg2_R1.fq.gz"
+      - "sample2/readgroup_2.*micro_rg2_R2.fq.gz"
+      - "sample2/readgroup_3/000-forward.txt.*micro_rg1_R2.fq.gz"
+      - "sample2/readgroup_3/000-reverse.txt.*micro_rg1_R1.fq.gz"
+
+      # Make sure a single forward/reverse pair specified in subsamples.csv
+      # works properly.
+      - "sample3/readgroup_1.*micro_rg2_R1.fq.gz"
+      - "sample3/readgroup_1.*micro_rg2_R2.fq.gz"

@@ -10,6 +10,8 @@ that users understand how the changes affect the new version.
 
 v0.0.1
 ---------------------------
++ Add support for multiple fastq files per sample via PEP subsample
+configuration.
 + Move pipeline specific configuration to 'snakemake-tssv' subsection of the
 pep file.
 + Add final_report.csv with combined, per marker results for each sample.

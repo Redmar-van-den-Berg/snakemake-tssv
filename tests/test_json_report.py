@@ -6,14 +6,14 @@ import json
 @pytest.mark.workflow('integration-two-samples')
 @pytest.mark.parametrize('sample', ['sample1', 'sample2'])
 def test_json_files_exist(workflow_dir, sample):
-    file_path = os.path.join(workflow_dir, f'{sample}/tssv/001-forward.json')
+    file_path = os.path.join(workflow_dir, f'{sample}/readgroup_1/001-forward.json')
     assert os.path.exists(file_path)
 
 
 @pytest.mark.workflow('integration-two-samples')
 @pytest.mark.parametrize('sample', ['sample1', 'sample2'])
 def test_json_merged_exists(workflow_dir, sample):
-    file_path = os.path.join(workflow_dir, f'{sample}/tssv/merged.json')
+    file_path = os.path.join(workflow_dir, f'{sample}/merged.json')
     assert os.path.exists(file_path)
 
 
@@ -25,7 +25,7 @@ def test_json_merged_exists(workflow_dir, sample):
     ('reverse', 18)
     ])
 def test_json_content_sample1(workflow_dir, field, value):
-    path = os.path.join(workflow_dir, 'sample1/tssv/001-forward.json')
+    path = os.path.join(workflow_dir, 'sample1/readgroup_1/001-forward.json')
     with open(path) as fin:
         data = json.load(fin)
 
@@ -40,7 +40,7 @@ def test_json_content_sample1(workflow_dir, field, value):
     ('reverse', 16)
     ])
 def test_json_content_sample2(workflow_dir, field, value):
-    path = os.path.join(workflow_dir, 'sample2/tssv/001-forward.json')
+    path = os.path.join(workflow_dir, 'sample2/readgroup_1/001-forward.json')
     with open(path) as fin:
         data = json.load(fin)
 
@@ -54,7 +54,7 @@ def test_json_content_sample2(workflow_dir, field, value):
     ('reverse', 29)
     ])
 def test_merged_json_content_sample1(workflow_dir, field, value):
-    path = os.path.join(workflow_dir, 'sample1/tssv/merged.json')
+    path = os.path.join(workflow_dir, 'sample1/merged.json')
     with open(path) as fin:
         data = json.load(fin)
 
@@ -68,7 +68,7 @@ def test_merged_json_content_sample1(workflow_dir, field, value):
     ('reverse', 23)
     ])
 def test_merged_json_content_sample2(workflow_dir, field, value):
-    path = os.path.join(workflow_dir, 'sample2/tssv/merged.json')
+    path = os.path.join(workflow_dir, 'sample2/merged.json')
     with open(path) as fin:
         data = json.load(fin)
 

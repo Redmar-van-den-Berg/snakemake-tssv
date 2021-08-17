@@ -1,0 +1,5 @@
+sample_name,forward,reverse
+sample2,tests/data/fastq/micro_rg1_R1.fq.gz,tests/data/fastq/micro_rg1_R2.fq.gz
+sample2,tests/data/fastq/micro_rg2_R1.fq.gz,tests/data/fastq/micro_rg2_R2.fq.gz
+sample3,tests/data/fastq/micro_rg2_R1.fq.gz,tests/data/fastq/micro_rg2_R2.fq.gz
+sample2,tests/data/fastq/micro_rg1_R2.fq.gz,tests/data/fastq/micro_rg1_R1.fq.gz

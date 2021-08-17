@@ -14,6 +14,11 @@ for details.
 | sample_table      | **required**  | CSV file with sample information, in a path relative to the project_config.yml file. See [here](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/one-sample.csv) for an example. |
 | snakemake-tssv    | **required**  | Subsection for pipeline specific settings, which are listed below. |
 
+### Pipeline specific settings
+The pipeline specific settings listed below should be placed under the
+`snakemake-tssv` section, see this [example
+configuration](https://github.com/Redmar-van-den-Berg/snakemake-tssv/blob/main/tests/pep/project_config_all_options.yml)
+for details.
 | snakemake-tssv    | Default value | Explanation |
 | -------------     | ------------- | ----------- |
 | vcf               | **required**  | A VCF file with variants to analyse using TSSV. |

@@ -169,3 +169,17 @@
       # works properly.
       - "sample3/readgroup_1.*micro_rg2_R1.fq.gz"
       - "sample3/readgroup_1.*micro_rg2_R2.fq.gz"
+
+  files:
+      # Test the contents of the final report, based on the specified inputs
+      # per sample.
+    - path: final_report.csv
+      contains:
+        - "Marker	Allele	sample1	sample2	sample3"
+        - "chrM:8860	G	53	153	47"
+        - "chrM:8860	AG	1	2	0"
+        - "chrM:8860	T	1	2	0"
+        - "chrM:13326	C	56	167	55"
+        - "chrM:13680	T	42	132	48"
+        - "chrM:14831	G	1	2	0"
+        - "chrM:14831	A	59	162	44"

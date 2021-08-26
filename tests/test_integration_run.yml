@@ -104,10 +104,10 @@
 
     - path: final_report.csv
       contains:
-        - "Marker	Allele	sample1	sample2"
-        - "chrM:8860	G	53	47"
-        - "chrM:16023	G	32	28"
-        - "chrM:16023	A	24	28"
+        - "Marker	Nr_alleles	Allele	sample1	sample2"
+        - "chrM:8860	3	G	53	47"
+        - "chrM:16023	2	G	32	28"
+        - "chrM:16023	2	A	24	28"
 
 - name: integration-all-options
   tags:
@@ -175,14 +175,15 @@
       # per sample.
     - path: final_report.csv
       contains:
-        - "Marker	Allele	sample1	sample2	sample3	sample1_AF	sample2_AF	sample3_AF"
-        - "chrM:8860	G	53	153	47"
-        - "chrM:8860	AG	1	2	0"
-        - "chrM:8860	T	1	2	0"
-        - "chrM:13326	C	56	167	55"
-        - "chrM:13680	T	42	132	48"
+        - "Marker	Nr_alleles	Allele	sample1	sample2	sample3	sample1_AF	sample2_AF	sample3_AF"
+        - "chrM:8860	3	G	53	153	47"
+        - "chrM:8860	3	AG	1	2	0"
+        - "chrM:8860	3	T	1	2	0"
+        - "chrM:13326	1	C	56	167	55"
+        - "chrM:13680	1	T	42	132	48"
         # We only test the allele frequency for one of the markers
-        - "chrM:14831	G	1	2	0	1.6	1.2	0"
-        - "chrM:14831	A	59	162	44	96.7	95.9	93.6"
-        - "chrM:14831	AC	1	3	1	1.6	1.8	2.1"
-        - "chrM:14831	C	0	1	1	0	0.6	2.1"
+        - "chrM:14831	5	G	1	2	0	1.6	1.2	0"
+        - "chrM:14831	5	A	59	162	44	96.7	95.9	93.6"
+        - "chrM:14831	5	AC	1	3	1	1.6	1.8	2.1"
+        - "chrM:14831	5	C	0	1	1	0	0.6	2.1"
+        - "chrM:14831	5	AA	0	1	1	0	0.6	2.1"

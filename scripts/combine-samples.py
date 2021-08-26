@@ -13,12 +13,17 @@ def main(args):
         with open(filename) as fin:
             data[samplename] = json.load(fin)
 
-    # For each report, determine alle alleles for each marker
+    # For each report, determine and count alle alleles for each marker
     alleles = defaultdict(set)
+    nr_alleles = defaultdict(int)
     for report in data.values():
         for marker in report:
             for allele in report[marker]:
-                alleles[marker].add(allele)
+                # First time we see this allele
+                if allele not in alleles[marker]:
+                    nr_alleles[marker]+=1
+                    alleles[marker].add(allele)
+
     # Determine the allele frequency for each allele in each sample
     for sample in data:
         for marker in data[sample]:
@@ -31,7 +36,7 @@ def main(args):
                 data[sample][marker][allele]['AF'] = AF
 
     # Print the header
-    header = ['Marker', 'Allele'] + args.names + [f'{sample}_AF' for sample in args.names]
+    header = ['Marker', 'Nr_alleles', 'Allele'] + args.names + [f'{sample}_AF' for sample in args.names]
     print(*header, sep='\t')
 
     # Print the data
@@ -45,6 +50,7 @@ def main(args):
                 except KeyError:
                     total = 0
                 sample_data.append(total)
+
             # Add the allele frequencies
             for sample in args.names:
                 try:
@@ -53,7 +59,7 @@ def main(args):
                     AF = 0
                 sample_data.append(AF)
 
-            print(marker, allele, *sample_data, sep='\t')
+            print(marker, nr_alleles[marker], allele, *sample_data, sep='\t')
 
 
 if __name__ == '__main__':

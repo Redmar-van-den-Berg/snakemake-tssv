@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 v0.0.1
 ---------------------------
++ Add allele frequencies to the final report.
 + Add support for multiple fastq files per sample via PEP subsample
 configuration.
 + Move pipeline specific configuration to 'snakemake-tssv' subsection of the

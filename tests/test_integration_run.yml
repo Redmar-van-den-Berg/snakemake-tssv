@@ -53,6 +53,8 @@
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
       --config pepfile=tests/pep/project_config_output_folder.yml
+      --configfile=tests/config_minimal.json
+      --config pepfile=tests/pep/project_config_single.yml variants_per_file=3 output_folder=true
       --snakefile Snakefile
   stderr:
     must_not_contain:

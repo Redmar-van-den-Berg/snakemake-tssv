@@ -1,5 +1,2 @@
 pep_version: 2.0.0
 sample_table: one-sample.csv
-snakemake-tssv:
-  reference: tests/data/reference/ref.fa
-  vcf: tests/data/micro.vcf

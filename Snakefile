@@ -1,5 +1,4 @@
 pepfile: config['pepfile']
-config = pep.config['snakemake-tssv']
 include: 'common.smk'
 
 rule all:

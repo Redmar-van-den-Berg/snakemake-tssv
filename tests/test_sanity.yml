@@ -20,3 +20,4 @@
     snakemake
       --lint
       --config pepfile=tests/pep/project_config_single.yml
+      --configfile=tests/config.json

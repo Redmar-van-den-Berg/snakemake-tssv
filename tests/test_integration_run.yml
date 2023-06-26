@@ -124,6 +124,7 @@
       --jobs 1
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --configfile=tests/config.json
       --config pepfile=tests/pep/project_config_all_options.yml
       --snakefile Snakefile
   exit_code: 0

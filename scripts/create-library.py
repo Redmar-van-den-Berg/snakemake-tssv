@@ -33,8 +33,8 @@ def main(args):
         if size > args.max_size:
             continue
         # VCF's are 1-based
-        begin = variant.POS - 1
-        end = begin + size
+        begin = variant.POS - 1 - args.spacing
+        end = begin + size + args.spacing
         lib = create_library(name, record, variant.CHROM, begin, end, args.flank_size)
         print(lib)
 
@@ -51,6 +51,8 @@ if __name__ == '__main__':
                         help='Size of the flanking regions')
     parser.add_argument('--max-size', default=20, type=int,
                         help='Maximum size of an indel to verify')
+    parser.add_argument('--spacing', default=0, type=int,
+                        help='Spacing between the variant and the flanking sequences')
 
     arguments = parser.parse_args()
     main(arguments)

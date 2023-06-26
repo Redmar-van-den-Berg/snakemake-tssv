@@ -54,7 +54,8 @@ rule create_tssv_config:
         create_library = srcdir('scripts/create-library.py')
     params:
         flank_size = config['flank_size'],
-        max_indel_size = config['max_indel_size']
+        max_indel_size = config['max_indel_size'],
+        spacing = config.get('spacing', 0),
     output:
         'library/{chunk}.lib'
     log:
@@ -66,6 +67,7 @@ rule create_tssv_config:
             --reference {input.ref} \
             --vcf {input.vcf} \
             --flank-size {params.flank_size} \
+            --spacing {params.spacing} \
             --max-size {params.max_indel_size} > {output}
     """
 

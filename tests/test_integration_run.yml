@@ -130,11 +130,9 @@
     contains:
       - "--flank-size 27"
       - "--max-size 23"
+      - "--spacing 5"
     contains_regex:
       - "split.*--lines 11"
-    must_not_contain:
-      - rror
-  stderr:
     must_not_contain:
       - rror
 

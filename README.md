@@ -32,10 +32,11 @@ for details.
 | max_indel_size    | 20            | The maximum size of indels from the VCF file to include in the analysis. |
 | output_folder     | false         | Enables the output folder for TSSV. **Should be used carefully, since it will output all fastq data, uncompressed.** |
 | variants_per_file | 50            | How many variants should be analysed at once.  Lower values with distribute the analysis over more, smaller jobs. |
+| spacing           | 0             | The spacing between the variant and the flanking regions. |
 
 
 ## Caveats and known issues
-1. If `2*(--flank-size) + --max-size` is larger than the read size of your
+1. If `2*(--flank-size + --spacing) + --max-size` is larger than the read size of your
    sequencing library, you will never find any hits. Also note that if this is
    only slightly smaller than your read size, very few reads will perfectly
    overlap the requested region, so you might still get very few results.

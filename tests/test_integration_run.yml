@@ -150,6 +150,7 @@
       --jobs 1
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
+      --configfile=tests/config_minimal.json
       --config pepfile=tests/pep/project_config_subsamples.yml
       --snakefile Snakefile
   stderr:

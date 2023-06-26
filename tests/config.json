@@ -1,0 +1,9 @@
+{
+  "vcf": "tests/data/micro.vcf",
+  "reference": "tests/data/reference/ref.fa",
+  "flank_size": 27,
+  "max_indel_size": 23,
+  "output_folder": true,
+  "variants_per_file": 11,
+  "spacing": 5
+}

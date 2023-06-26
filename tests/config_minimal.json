@@ -1,0 +1,4 @@
+{
+  "vcf": "tests/data/micro.vcf",
+  "reference": "tests/data/reference/ref.fa"
+}

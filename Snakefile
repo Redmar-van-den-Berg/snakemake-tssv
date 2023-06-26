@@ -1,4 +1,3 @@
-pepfile: config['pepfile']
 include: 'common.smk'
 
 rule all:
@@ -132,10 +131,10 @@ rule combine_samples:
     Combine the merged data for each sample into a single tsv file
     """
     input:
-        reports = expand('{sample}/merged.json', sample=pep.sample_table.index),
+        reports = expand('{sample}/merged.json', sample=samples),
         combine_samples = srcdir('scripts/combine-samples.py'),
     params:
-        names = [sample for sample in pep.sample_table.index]
+        names = samples,
     output:
         final_report = 'final_report.csv'
     log:

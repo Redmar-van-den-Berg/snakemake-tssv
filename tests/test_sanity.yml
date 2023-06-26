@@ -19,5 +19,5 @@
   command: >
     snakemake
       --lint
-      --config pepfile=tests/pep/project_config_single.yml
+      --config pepfile=tests/pep/one-sample.csv
       --configfile=tests/config.json

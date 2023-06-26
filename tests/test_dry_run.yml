@@ -6,7 +6,7 @@
       --dryrun
       --reason
       --printshellcmds
-      --config pepfile=tests/pep/project_config_minimal.yml
+      --config pepfile=tests/pep/one-sample.csv
       --configfile=tests/config_minimal.json
       --snakefile Snakefile
   exit_code: 0

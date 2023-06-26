@@ -9,7 +9,7 @@
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
       --configfile=tests/config_minimal.json
-      --config pepfile=tests/pep/project_config_single.yml variants_per_file=3
+      --config pepfile=tests/pep/one-sample.csv variants_per_file=3
       --snakefile Snakefile
   stderr:
     must_not_contain:
@@ -52,9 +52,8 @@
       --jobs 1
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
-      --config pepfile=tests/pep/project_config_output_folder.yml
       --configfile=tests/config_minimal.json
-      --config pepfile=tests/pep/project_config_single.yml variants_per_file=3 output_folder=true
+      --config pepfile=tests/pep/one-sample.csv variants_per_file=3 output_folder=true
       --snakefile Snakefile
   stderr:
     must_not_contain:
@@ -80,9 +79,8 @@
       --jobs 1
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
-      --config pepfile=tests/pep/project_config_output_folder.yml
       --configfile=tests/config_minimal.json
-      --config pepfile=tests/pep/project_config_two.yml variants_per_file=10
+      --config pepfile=tests/pep/two-samples.csv variants_per_file=10
       --snakefile Snakefile
   stderr:
     must_not_contain:
@@ -125,7 +123,7 @@
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
       --configfile=tests/config.json
-      --config pepfile=tests/pep/project_config_all_options.yml
+      --config pepfile=tests/pep/one-sample.csv
       --snakefile Snakefile
   exit_code: 0
   stderr:
@@ -151,7 +149,7 @@
       --latency-wait 120
       --use-singularity --singularity-args ' --cleanenv --bind /tmp'
       --configfile=tests/config_minimal.json
-      --config pepfile=tests/pep/project_config_subsamples.yml
+      --config pepfile=tests/pep/subsamples.csv
       --snakefile Snakefile
   stderr:
     contains_regex:

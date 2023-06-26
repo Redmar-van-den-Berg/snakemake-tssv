@@ -1,8 +1,13 @@
+pepfile: config['pepfile']
+
+samples = sorted(pep.sample_table.index)
+
 containers = {
         'debian': 'docker://debian:latest',
         'tssv': 'docker://quay.io/biocontainers/tssv:1.1.0--py39h7cff6ad_0',
         'tssv-library': 'docker://quay.io/biocontainers/mulled-v2-ddb8b80b33a09f54efd9219c18e1d38acfa18bc8:ae02896ffb35dfc564385b2276a1fbf7862567c2-0'
 }
+
 
 def gather_tssv_reports(wildcards):
     """

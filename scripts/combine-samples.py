@@ -5,7 +5,6 @@ import json
 from collections import defaultdict
 
 
-
 def main(args):
     # Read the log files
     data = dict()
